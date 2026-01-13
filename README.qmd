@@ -1,7 +1,9 @@
 ---
 title: "Activity 3: Data visualization: fundamentals of ggplot"
-subtitle: Jan. 12th, 2026, Calvin Munson
-format: markdown_github
+subtitle: Jan. 12th, 2026, Joshua Holt and Sam Larralde
+format: 
+pdf: default
+gfm: default
 editor: visual
 ---
 
@@ -64,7 +66,7 @@ Great! It looks like we have a dataframe with 7 columns of data. This dataset is
 Dataframes can be very large and have many columns; it is sometimes useful to be able to concisely see all of the column names of a dataframe. Just like with the `head()` function earlier, use the `colnames()` function to retrieve and look at a vector of all of the column names of this dataframe.
 
 ```{r q1}
-
+colnames(ci_np)
 ```
 
 ## Graphing basics
@@ -116,7 +118,8 @@ ggplot(data = ci_np, mapping = aes(x = year, y = visitors)) +
 Replicate the same graph, but this time with a line graph.
 
 ```{r}
-
+ggplot(data = ci_np, mapping = aes(x = year, y = visitors)) +
+  geom_line()
 ```
 
 You can add multiple geoms to one graph by simply adding another line with a `+`. This layers the additional geoms on top of the ones that come before it, so if you want to change the order of the geoms (e.g. putting the line underneath the points, which may be relevant if you add color...), just make sure the "bottom" layer comes first in the code.
@@ -199,7 +202,8 @@ ggplot(ci_np, aes(x = year, y = visitors)) +
 Let's go back to the lineplot. Create the lineplot, but this time, with a dashed linetype and a different colored line.
 
 ```{r}
-
+ggplot(ci_np, aes(x = year, y = visitors)) +
+  geom_line(linetype = 2, color = "red")
 ```
 
 ## Mapping other variables onto aesthetics
@@ -260,7 +264,8 @@ It seems immediately clear that some of the stretches of points belong to separa
 Duplicate the scatterplot from above, but make the color of points vary with the park name.
 
 ```{r include = TRUE}
-
+ggplot(data = ca_np, mapping = aes(x = year, y = visitors)) +
+  geom_point(aes(color = park_name))
 
 ```
 
@@ -303,6 +308,17 @@ Explore this dataset a little bit and then write a research question that you wo
 Use what you have learned to make a graph to answer that question. Try and add a personal twist to the graph (but no stress - the next activity will be all about customizing graphs and making them prettier/more readable!).
 
 After you have made a graph, write 1) a sentence or two about what you have learned from the graph and 2) a follow-up research question (is there additional data that you might want to acquire for your follow-up question?).
+
+```{r include = TRUE}
+library(ggplot2)
+library(here)
+
+ab_la <- read.csv("abalone_landings.csv")
+ggplot(ab_la, aes(x = Year, y = Abalone_Landings_lbs)) +
+  geom_line(aes(color= Abalone_Species)) +
+  geom_point(aes(color= Abalone_Species))
+ggsave("Abalone_Landings_per_Year.png")
+```
 
 ### Q8 Export the graph
 
